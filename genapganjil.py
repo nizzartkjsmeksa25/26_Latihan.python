@@ -5,7 +5,7 @@ for i in range(5):
         print(bilangan, "adalah bilangan genap")
     else:
         print(bilangan, "adalah bilangan ganjil")
-
+        
     # Perulangan akan terus berjalan selama variabel lanjut bernilai 'y' atau 'Y'
     while lanjut.lower() == "y":
         # 1. Input bilangan dari pengguna
