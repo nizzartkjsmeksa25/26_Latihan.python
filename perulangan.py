@@ -1,25 +1,25 @@
-for i in range(5):
-    bilangan = int(input("Masukkan bilangan: "))
+# ALAT PENGHITUNG ANGKA GANJIL DAN GENAP
 
-    if bilangan % 2 == 0:
-        print(bilangan, "adalah bilangan genap")
-    else:
-        print(bilangan, "adalah bilangan ganjil")
-        
-    # Perulangan akan terus berjalan selama variabel lanjut bernilai 'y' atau 'Y'
-    while lanjut.lower() == "y":
-        # 1. Input bilangan dari pengguna
-        bilangan = int(input("\nMasukkan sebuah bilangan: "))
-    
-        # 2. Logika Modulus (sisa pembagian dengan 2)
-        if bilangan % 2 == 0:
-            print(f"--> {bilangan} adalah bilangan GENAP")
+while True:
+    print("\n=== PENGECEKAN GANJIL / GENAP ===")
+    print("Ketik 'q' untuk keluar dari program.")
+
+    X = input("Masukkan Angka : ")
+
+    # Tombol keluar
+    if X.lower() == "q":
+        print("Program selesai. Terima kasih!")
+        break
+
+    # Memastikan input berupa angka
+    try:
+        X = int(X)
+
+        # LOGIKA PENGHITUNGAN
+        if X % 2 == 0:
+            print("Angka", X, "Termasuk Bilangan Genap")
         else:
-            print(f"--> {bilangan} adalah bilangan GANJIL")
-    
-        # 3. Menanyakan apakah pengguna ingin mengulang atau keluar
-        lanjut = input(
-            "\nApakah ingin mengecek bilangan lain? (y/n untuk keluar): "
-        )
-    
-    print("\nProgram selesai. Terima kasih!")
+            print("Angka", X, "Termasuk Bilangan Ganjil")
+
+    except ValueError:
+        print("Input tidak valid! Masukkan angka atau 'q' untuk keluar.")
