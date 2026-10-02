@@ -1,47 +1,28 @@
-import gspread
-from google.oauth2.service_account import Credentials
+import sqlite3
 from datetime import datetime
-import getpass
-import os
 
-# Pengaturan akses Google Sheets
-scope = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive"
-]
+def init_db():
+    conn = sqlite3.connect("database_nizzar.db")
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS pengguna (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nama TEXT,
+            kelas TEXT,
+            password TEXT,
+            timer TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
 
-# Membaca credentials
-creds = Credentials.from_service_account_file(
-    "credentials.json",
-    scopes=scope
-)
-
-# Login ke Google Sheets
-client = gspread.authorize(creds)
-
-# Membuka spreadsheet "database"
-sheet = client.open("database").sheet1
-
-# Membuat judul kolom
-sheet.update("A1:D1", [["Nama", "Kelas", "Password", "Timer"]])
-
-# Membersihkan terminal
-os.system("cls")
-
-# Input data
-nama = input("Masukkan nama : ")
-kelas = input("Masukkan kelas : ")
-password = getpass.getpass("Masukkan password : ")
-
-# Mengambil waktu saat data dimasukkan
-timer = datetime.now().strftime("%H:%M:%S")
-
-# Memasukkan data ke Google Sheets
-sheet.append_row([nama, kelas, password, timer])
-
-# Menampilkan hasil
-print("\nData berhasil disimpan!")
-print("Nama     :", nama)
-print("Kelas    :", kelas)
-print("Password :", "*" * len(password))
-print("Timer    :", timer)
+def simpan_data(nama, kelas, password):
+    init_db()
+    conn = sqlite3.connect("database_nizzar.db")
+    cursor = conn.cursor()
+    timer = datetime.now().strftime("%H:%M:%S")
+    cursor.execute("INSERT INTO pengguna (nama, kelas, password, timer) VALUES (?, ?, ?, ?)", 
+                   (nama, kelas, password, timer))
+    conn.commit()
+    conn.close()
+    return timer
